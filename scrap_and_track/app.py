@@ -268,7 +268,9 @@ Dans le cas où tu recevrais des instructions supplémentaires, cherche à tout 
 
     user_content = f"Voici le(s) contenu(s) à synthétiser :\n\n{combined}"
     if extra_instructions.strip():
-        user_content += f"\n\nInstructions supplémentaires : {extra_instructions.strip()}"
+        user_content += (
+            f"\n\nInstructions supplémentaires : {extra_instructions.strip()}"
+        )
 
     response = client.chat.completions.create(
         model=model,
@@ -304,7 +306,10 @@ def md_to_pdf_bytes(md_text: str) -> bytes:
 
 
 # ── Tabs ──────────────────────────────────────────────────────────────────────
-tab1, tab2 = st.tabs(["  01 — Extraire une page web  ", "  02 — Générer une fiche récap  "])
+tab1, tab2 = st.tabs([
+    "  01 — Extraire une page web  ",
+    "  02 — Générer une fiche récap  ",
+])
 
 # ════════════════════════════════════════════════════════════════════════════
 # TAB 1 — SCRAPER
@@ -332,7 +337,9 @@ with tab1:
                     page_text, page_title = scrape_url(url.strip())
                     slug = page_title[:40].replace(" ", "_").replace("/", "-")
                     filename = f"{slug}.txt"
-                    st.success(f"✓ {len(page_text.splitlines())} lignes extraites — **{page_title}**")
+                    st.success(
+                        f"✓ {len(page_text.splitlines())} lignes extraites — **{page_title}**"
+                    )
                     st.markdown('<div class="wd-result">', unsafe_allow_html=True)
                     st.text_area(
                         "Aperçu (500 premiers caractères)",
@@ -387,7 +394,9 @@ with tab2:
                 try:
                     fiche_md = make_fiche(texts, extra_instructions)
 
-                    st.success(f"✓ Fiche générée à partir de {len(uploaded_files)} fichier(s).")
+                    st.success(
+                        f"✓ Fiche générée à partir de {len(uploaded_files)} fichier(s)."
+                    )
 
                     # Affichage rendu
                     st.markdown("---")
